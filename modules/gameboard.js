@@ -1,9 +1,13 @@
-class Gameboard{
+class Gameboard {
+  constructor(player) {
+    this.player = player;
+    this.ships = [];
+    this.board = new Array(64);
+  }
 
-    constructor(){
-        this.ships = [];
-        this.board = [];
-    }
+  getCellIndex(hor, ver) {
+    return (ver - 1) * 10 + (hor - 1);
+  }
 }
 
 module.exports = Gameboard;
