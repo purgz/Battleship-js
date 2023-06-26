@@ -46,13 +46,15 @@ describe("Placing ships in correct locations", () => {
     expect(gameboard.placeShip(0, [10, 10], true)).toBe(true);
   });
 
-  /*
-  test("Placing ship horizontally correct",()=>{
+  test("Placing ship horizontally correct", () => {
     const gameboard = new Gameboard(ships);
-    expect(gameboard.placeShip(0, [1,1], false)).toBe(true);
-    expect(gameboard.board[gameboard.getCellIndex(1,1)]).toBe(0);
-    expect(gameboard.board[gameboard.getCellIndex(2,1)]).toBe(0);
-    expect(gameboard.board[gameboard.getCellIndex(2,1)]).toBe(-1);
-  })
-  */
+    expect(gameboard.placeShip(0, [1, 1], false)).toBe(true);
+    expect(gameboard.board[gameboard.getCellIndex(1, 1)]).toBe(0);
+    expect(gameboard.board[gameboard.getCellIndex(2, 1)]).toBe(0);
+    expect(gameboard.board[gameboard.getCellIndex(3, 1)]).toBe(-1);
+
+    expect(gameboard.placeShip(1, [1, 1], false)).toBe(false);
+    expect(gameboard.placeShip(0, [10, 1], false)).toBe(false);
+    expect(gameboard.placeShip(0, [9, 1], false)).toBe(true);
+  });
 });
