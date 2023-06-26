@@ -6,7 +6,7 @@ class Ship {
 
   //increments the hits on a ship
   hit() {
-    numHits++;
+    this.numHits++;
   }
 
   //returns true if ship is sunk

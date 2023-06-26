@@ -58,3 +58,27 @@ describe("Placing ships in correct locations", () => {
     expect(gameboard.placeShip(0, [9, 1], false)).toBe(true);
   });
 });
+
+describe("recieve attack function", () => {
+  const ship1 = new Ship(2);
+  const ship2 = new Ship(3);
+  const ship3 = new Ship(4);
+  const ships = [ship1, ship2, ship3];
+  const gameboard = new Gameboard(ships);
+
+  gameboard.placeShip(0, [9, 1], false);
+  gameboard.placeShip(1, [3, 3], true);
+  gameboard.placeShip(2, [1, 7], false);
+
+  test("Testing simple hit and miss", () => {
+    //testing miss
+    expect(gameboard.receiveAttack([1, 1])).toBe(false);
+
+    //testing sinking of ship 0
+    expect(gameboard.receiveAttack([9, 1])).toBe(true);
+    expect(gameboard.ships[0].isSunk()).toBe(false);
+    expect(gameboard.receiveAttack([10, 1])).toBe(true);
+    expect(gameboard.ships[0].numHits).toBe(2);
+    expect(gameboard.ships[0].isSunk()).toBe(true);
+  });
+});
