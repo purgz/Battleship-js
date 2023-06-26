@@ -64,6 +64,18 @@ class Gameboard {
 
     return true;
   }
+
+  allShipsSunk(){
+
+    for (let i = 0; i < this.ships.length; i++){
+      if (!this.ships[i].isSunk()){
+        return false;
+      }
+    }
+
+    //all ships sunk
+    return true;
+  }
 }
 
 module.exports = Gameboard;

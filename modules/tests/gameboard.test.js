@@ -82,3 +82,29 @@ describe("recieve attack function", () => {
     expect(gameboard.ships[0].isSunk()).toBe(true);
   });
 });
+
+describe("test all ships sunk method", () => {
+  const ship1 = new Ship(2);
+  const ship2 = new Ship(3);
+  const ship3 = new Ship(4);
+  const ships = [ship1, ship2, ship3];
+  const gameboard = new Gameboard(ships);
+
+  gameboard.placeShip(0, [9, 1], false);
+  gameboard.placeShip(1, [3, 3], true);
+  gameboard.placeShip(2, [1, 7], false);
+
+  gameboard.receiveAttack([9, 1]);
+  gameboard.receiveAttack([10, 1]);
+  gameboard.receiveAttack([3, 3]);
+  gameboard.receiveAttack([3, 2]);
+  gameboard.receiveAttack([3, 1]);
+  gameboard.receiveAttack([1, 7]);
+  gameboard.receiveAttack([2, 7]);
+  gameboard.receiveAttack([3, 7]);
+  gameboard.receiveAttack([4, 7]);
+
+  test("have all 3 ships been sunk", () => {
+    expect(gameboard.allShipsSunk()).toBe(true);
+  });
+});
