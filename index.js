@@ -22,11 +22,23 @@ for (let i = 10; i > 0; i--) {
   board.appendChild(row);
 }
 
-const cells = document.querySelectorAll(".row");
-console.log(cells[0].children)
+const rows = document.querySelectorAll(".row");
+console.log(rows[0].children);
 
-function renderShips(){
-  for (let i = 0; i < player.gameboard.board.length; i++){
 
+function renderShips() {
+  //i * 10
+  for (let i = 0; i < 10; i++) {
+    const currentRow = rows[i].children;
+  
+    for (let j = 0; j < currentRow.length; j++) {
+      const value = player.gameboard.board[(9-i) * 10 + j];
+      //currentRow[j].textContent = player.gameboard.board[(9-i) * 10 + j]
+      if (value !== -1){
+        currentRow[j].style.backgroundColor = "green";
+      }
+    }
   }
 }
+
+renderShips();

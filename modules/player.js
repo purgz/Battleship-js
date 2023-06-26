@@ -5,7 +5,7 @@ class Player {
   constructor(name) {
     this.name = name;
     this.moves = this.populateMoves();
-    this.gameboard = new Gameboard([new Ship(1), new Ship(2), new Ship(3)]);
+    this.gameboard = new Gameboard([new Ship(2), new Ship(4), new Ship(5)]);
     this.placeShipsRandomly();
   }
 
