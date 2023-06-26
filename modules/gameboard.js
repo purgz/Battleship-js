@@ -9,11 +9,16 @@ class Gameboard {
     return (ver - 1) * 10 + (hor - 1);
   }
 
-  placeShip(shipIndex, coord) {
+  placeShip(shipIndex, coord, isShipVertical) {
     //puts the index of ship in the board array
     const ship = this.ships[shipIndex];
-    if (ship.length <= coord[1] && coord[0] <= 10 && coord[1] <= 10) {
-
+    if (
+      ship.length <= coord[1] &&
+      coord[0] <= 10 &&
+      coord[1] <= 10 &&
+      coord[0] >= 1 &&
+      coord[1] >= 1
+    ) {
       //check if a ship is already placed in this location
       for (let i = 0; i < ship.length; i++) {
         if (this.board[this.getCellIndex(coord[0], coord[1] - i)] !== -1) {
