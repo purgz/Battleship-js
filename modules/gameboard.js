@@ -3,6 +3,7 @@ class Gameboard {
     this.ships = ships;
     this.board = new Array(100);
     this.board.fill(-1);
+    this.misses = [];
   }
 
   getCellIndex(hor, ver) {
@@ -52,9 +53,13 @@ class Gameboard {
   receiveAttack(coord){
     //convert into cell index
     const cellIndex = this.getCellIndex(coord[0], coord[1]);
+    if(this.misses.includes(cellIndex)){
+      return false;
+    }
 
     if(this.board[cellIndex] == -1){
       //no hit
+      this.misses.push(cellIndex);
       return false;
     }
 
@@ -78,4 +83,4 @@ class Gameboard {
   }
 }
 
-module.exports = Gameboard;
+//module.exports = Gameboard;

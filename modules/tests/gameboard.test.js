@@ -106,5 +106,8 @@ describe("test all ships sunk method", () => {
 
   test("have all 3 ships been sunk", () => {
     expect(gameboard.allShipsSunk()).toBe(true);
+
+    gameboard.receiveAttack([1,1]);
+    expect(gameboard.misses.includes(0)).toBe(true);
   });
 });
