@@ -67,6 +67,7 @@ class Gameboard {
 
     this.ships[hitShipIndex].hit();
 
+    //returns true if hit otherwise false
     return true;
   }
 

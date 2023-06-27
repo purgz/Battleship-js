@@ -17,18 +17,30 @@ class Player {
     return moves;
   }
 
+  repeatedAttack(coord){
+    const cellIndex = this.gameboard.getCellIndex(coord[0], coord[1]);
+
+    if (!this.moves.includes(cellIndex)){
+      return true;
+    }
+    //valid attack
+    return false;
+  }
+
   attack(coord, opponent) {
     const cellIndex = this.gameboard.getCellIndex(coord[0], coord[1]);
 
-    if (!this.moves.includes(cellIndex)) {
-      return false;
-    }
-
     this.moves.splice(this.moves.indexOf(cellIndex), 1);
 
-    opponent.gameboard.receiveAttack(coord);
-
-    return true;
+    /*
+    if (opponent.gameboard.receiveAttack(coord)){
+      console.log("HIT");
+    } else{
+      console.log("MISS");
+    }
+    */
+    
+    return opponent.gameboard.receiveAttack(coord);
   }
 
   placeShipsRandomly() {

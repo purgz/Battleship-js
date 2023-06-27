@@ -6,12 +6,13 @@ body{
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-evenly;
   background-color: lightblue;
   height: 100vh;
 }
 
-#board{
+#board, #aiBoard{
   display: flex;
   gap: 1px;
   flex-direction: column;
