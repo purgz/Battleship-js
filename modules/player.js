@@ -32,16 +32,9 @@ class Player {
 
     this.moves.splice(this.moves.indexOf(cellIndex), 1);
 
-    /*
-    if (opponent.gameboard.receiveAttack(coord)){
-      console.log("HIT");
-    } else{
-      console.log("MISS");
-    }
-    */
-    
     return opponent.gameboard.receiveAttack(coord);
   }
+
 
   placeShipsRandomly() {
     //generate random coordinate

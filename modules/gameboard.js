@@ -10,6 +10,10 @@ class Gameboard {
     return (ver - 1) * 10 + (hor - 1);
   }
 
+  getCoordFromIndex(index) {
+    return [(index % 10) + 1, Math.floor(index / 10) + 1];
+  }
+
   placeShip(shipIndex, coord, isShipVertical) {
     //puts the index of ship in the board array
     const ship = this.ships[shipIndex];
@@ -49,15 +53,14 @@ class Gameboard {
     return false;
   }
 
-
-  receiveAttack(coord){
+  receiveAttack(coord) {
     //convert into cell index
     const cellIndex = this.getCellIndex(coord[0], coord[1]);
-    if(this.misses.includes(cellIndex)){
+    if (this.misses.includes(cellIndex)) {
       return false;
     }
 
-    if(this.board[cellIndex] == -1){
+    if (this.board[cellIndex] == -1) {
       //no hit
       this.misses.push(cellIndex);
       return false;
@@ -71,10 +74,9 @@ class Gameboard {
     return true;
   }
 
-  allShipsSunk(){
-
-    for (let i = 0; i < this.ships.length; i++){
-      if (!this.ships[i].isSunk()){
+  allShipsSunk() {
+    for (let i = 0; i < this.ships.length; i++) {
+      if (!this.ships[i].isSunk()) {
         return false;
       }
     }

@@ -2,8 +2,9 @@ const yourBoard = document.querySelector("#board");
 const aiBoard = document.querySelector("#aiBoard");
 const boardSize = 10; //currently only supports boardsize of 10 as the player and gameboard classes are hardcoded to 10x10
 
-const player = new Player();
-const player2 = new Player();
+const player = new Player("player 1");
+const player2 = new Player("player 2");
+let winner;
 
 function createBoardGrid(board) {
   for (let i = boardSize; i > 0; i--) {
@@ -37,14 +38,43 @@ function addEventListeners() {
       const currentCell = currentRow[j];
       currentCell.onclick = function () {
         const attackCoords = [
-          currentCell.getAttribute("row"),
           currentCell.getAttribute("col"),
+          currentCell.getAttribute("row")
         ];
 
         if (!player.repeatedAttack(attackCoords)){
+
+          console.log(attackCoords)
+          //user move
           attack(attackCoords);
-        } else {
-          console.log("INVALID MOVE");
+
+          if (isGameOver()){
+            console.log("GAME OVER !!!!");
+            console.log(winner.name)
+            alert("Game over");
+            return;
+          }
+
+          //ai move
+          const move = player2.moves[player2.getRandomInt(player2.moves.length - 1)];
+          const moveCoord = player2.gameboard.getCoordFromIndex(move);
+          console.log("Computer attacking: " + moveCoord + " " + move);
+          player2.attack(moveCoord, player);
+          const rows = yourBoard.children;
+          const row = rows[boardSize - moveCoord[1]].children;
+          const cell = row[moveCoord[0] - 1];
+          
+          cell.textContent = "X";
+
+          if (isGameOver()){
+            console.log("GAME OVER !!!!");
+            console.log(winner.name)
+            alert("GAME OVER")
+            return;
+          }
+            
+        } else{
+          console.log("invalid");
         }
       };
     }
@@ -54,13 +84,13 @@ function addEventListeners() {
 //colors the cells when attacked and checks for invalid attack
 function attack(coords) {
   const rows = aiBoard.children;
-  const row = rows[boardSize - coords[0]].children;
-  const cell = row[coords[1]-1];
  
+  const row = rows[boardSize - coords[1]].children;
+  const cell = row[coords[0] - 1];
+
   if (player.attack(coords, player2)) {
     cell.style.backgroundColor = "green";
-    
-  } else{
+  } else {
     cell.style.backgroundColor = "red";
   }
 }
@@ -81,8 +111,22 @@ function renderOwnBoard() {
   }
 }
 
+function isGameOver() {
+  if (player.gameboard.allShipsSunk()) {
+    winner = player2;
+    return true;
+  } else if (player2.gameboard.allShipsSunk()) {
+    winner = player;
+    return true;
+  }
+  //game is not over yet
+  return false;
+}
+
 createBoardGrid(yourBoard);
 createBoardGrid(aiBoard);
 addEventListeners();
-
 renderOwnBoard();
+
+//add game loop
+
