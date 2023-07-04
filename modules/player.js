@@ -2,11 +2,18 @@
 //const Ship = require("./ship");
 
 class Player {
-  constructor(name) {
+  constructor(name, isAi) {
     this.name = name;
     this.moves = this.populateMoves();
-    this.gameboard = new Gameboard([new Ship(2), new Ship(4), new Ship(5)]);
-    this.placeShipsRandomly();
+    this.gameboard = new Gameboard([
+      new Ship(2),
+      new Ship(4),
+      new Ship(5),
+      new Ship(6),
+    ]);
+    if (isAi) {
+      this.placeShipsRandomly();
+    }
   }
 
   populateMoves() {
@@ -17,10 +24,10 @@ class Player {
     return moves;
   }
 
-  repeatedAttack(coord){
+  repeatedAttack(coord) {
     const cellIndex = this.gameboard.getCellIndex(coord[0], coord[1]);
 
-    if (!this.moves.includes(cellIndex)){
+    if (!this.moves.includes(cellIndex)) {
       return true;
     }
     //valid attack
@@ -35,7 +42,6 @@ class Player {
     return opponent.gameboard.receiveAttack(coord);
   }
 
-
   placeShipsRandomly() {
     //generate random coordinate
     let coord = [this.getRandomInt(10), this.getRandomInt(10)];
@@ -46,11 +52,11 @@ class Player {
       vertical = false;
     }
 
-    for (let i = 0; i < this.gameboard.ships.length; i++){
-      while(!this.gameboard.placeShip(i, coord, vertical)){
+    for (let i = 0; i < this.gameboard.ships.length; i++) {
+      while (!this.gameboard.placeShip(i, coord, vertical)) {
         coord = [this.getRandomInt(10), this.getRandomInt(10)];
         vertical = true;
-    
+
         //horizontal or vertical ship 50/50 chance
         if (Math.random() < 0.5) {
           vertical = false;

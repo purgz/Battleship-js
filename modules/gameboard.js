@@ -17,11 +17,12 @@ class Gameboard {
   placeShip(shipIndex, coord, isShipVertical) {
     //puts the index of ship in the board array
     const ship = this.ships[shipIndex];
-
+    
     //check if valid coords
     if (coord[0] <= 10 && coord[1] <= 10 && coord[0] >= 1 && coord[1] >= 1) {
       //check vertical case
       if (isShipVertical && ship.length <= coord[1]) {
+        
         //check if a ship is already placed in this location
         for (let i = 0; i < ship.length; i++) {
           if (this.board[this.getCellIndex(coord[0], coord[1] - i)] !== -1) {
@@ -34,6 +35,7 @@ class Gameboard {
         }
         return true;
       } else if (!isShipVertical && ship.length <= 11 - coord[0]) {
+        
         //handle horizontal ship placement
         //11 - x gives the horizontal space
         for (let i = 0; i < ship.length; i++) {
@@ -43,6 +45,9 @@ class Gameboard {
         }
 
         for (let i = 0; i < ship.length; i++) {
+          console.log(coord[0] , coord[1])
+          console.log(this.getCellIndex(coord[0] + i, coord[1]))
+          
           this.board[this.getCellIndex(coord[0] + i, coord[1])] = shipIndex;
         }
         return true;
