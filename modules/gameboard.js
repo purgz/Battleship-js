@@ -45,8 +45,8 @@ class Gameboard {
         }
 
         for (let i = 0; i < ship.length; i++) {
-          console.log(coord[0] , coord[1])
-          console.log(this.getCellIndex(coord[0] + i, coord[1]))
+          //console.log(coord[0] , coord[1])
+          //console.log(this.getCellIndex(coord[0] + i, coord[1]))
           
           this.board[this.getCellIndex(coord[0] + i, coord[1])] = shipIndex;
         }
@@ -89,6 +89,7 @@ class Gameboard {
     //all ships sunk
     return true;
   }
+
 }
 
 //module.exports = Gameboard;

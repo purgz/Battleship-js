@@ -137,12 +137,97 @@ function placeShips() {
         parseInt(hoverSquare.getAttribute("col")),
         parseInt(hoverSquare.getAttribute("row")),
       ];
+
       if (shipIndex > player.gameboard.ships.length - 1) {
         yourBoard.removeEventListener("mousemove", hoverOverSquare);
       }
     },
     { passive: true }
   );
+
+  /*
+    really badly written code to render the ships as you are hovering over where to place them but it works
+    uses queryselector to find the cells based on the length of the ship and 
+    if the ship is vertical or now
+    mouseover changes color to grey and then mouseout removes the color again
+  */
+  yourBoard.addEventListener("mouseover", function mouseHover(e) {
+    if (shipIndex > player.gameboard.ships.length - 1) {
+      yourBoard.removeEventListener("mouseover", mouseHover);
+      return;
+    }
+
+    if (e.target.classList.contains("square")) {
+      const col = parseInt(e.target.getAttribute("col"));
+      const row = parseInt(e.target.getAttribute("row"));
+      let hoveredSquares = [];
+
+      if (vertical && row - player.gameboard.ships[shipIndex].length >= 0) {
+        for (let i = 0; i < player.gameboard.ships[shipIndex].length; i++) {
+          const cells = yourBoard.querySelectorAll(`[row="${row - i}"]`);
+          console.log(cells[col - 1]);
+          hoveredSquares.push(cells[col - 1]);
+        }
+      } else if (col + player.gameboard.ships[shipIndex].length <= 11) {
+        for (let i = 0; i < player.gameboard.ships[shipIndex].length; i++) {
+          const cells = yourBoard.querySelectorAll(`[col="${col + i}"]`);
+          hoveredSquares.push(cells[10 - row]);
+        }
+      }
+      let isPlaced = false;
+      for (let i = 0; i < hoveredSquares.length; i++) {
+        if (hoveredSquares[i].style.backgroundColor == "green") {
+          isPlaced = true;
+        }
+      }
+
+      if (!isPlaced) {
+        hoveredSquares.forEach((cell) => {
+          cell.style.backgroundColor = "grey";
+        });
+      }
+    }
+  });
+
+  yourBoard.addEventListener("mouseout", function mouseOut(e) {
+    if (shipIndex > player.gameboard.ships.length - 1) {
+      yourBoard.removeEventListener("mouseout", mouseOut);
+      return;
+    }
+
+    if (
+      e.target.classList.contains("square") &&
+      e.target.style.backgroundColor !== "green"
+    ) {
+      const col = parseInt(e.target.getAttribute("col"));
+      const row = parseInt(e.target.getAttribute("row"));
+      let hoveredSquares = [];
+
+      if (vertical && row - player.gameboard.ships[shipIndex].length >= 0) {
+        for (let i = 0; i < player.gameboard.ships[shipIndex].length; i++) {
+          const cells = yourBoard.querySelectorAll(`[row="${row - i}"]`);
+          hoveredSquares.push(cells[col - 1]);
+        }
+      } else if (col + player.gameboard.ships[shipIndex].length <= 11) {
+        for (let i = 0; i < player.gameboard.ships[shipIndex].length; i++) {
+          const cells = yourBoard.querySelectorAll(`[col="${col + i}"]`);
+          hoveredSquares.push(cells[10 - row]);
+        }
+      }
+      let isPlaced = false;
+      for (let i = 0; i < hoveredSquares.length; i++) {
+        if (hoveredSquares[i].style.backgroundColor == "green") {
+          isPlaced = true;
+        }
+      }
+
+      if (!isPlaced) {
+        hoveredSquares.forEach((cell) => {
+          cell.style.backgroundColor = "";
+        });
+      }
+    }
+  });
 
   document.addEventListener("keydown", function rotateHandler(e) {
     if (e.code == "KeyR") {
@@ -151,7 +236,12 @@ function placeShips() {
       } else {
         vertical = true;
       }
-      console.log(vertical);
+
+      yourBoard
+        .querySelectorAll("[style='background-color: grey;']")
+        .forEach((square) => {
+          square.style.backgroundColor = "";
+        });
     }
     if (shipIndex > player.gameboard.ships.length - 1) {
       document.removeEventListener("keydown", rotateHandler);
