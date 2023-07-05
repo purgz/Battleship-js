@@ -26,6 +26,7 @@ function createBoardGrid(board) {
     }
     board.appendChild(row);
   }
+  
 }
 
 function addEventListeners() {
@@ -267,11 +268,13 @@ function placeShips() {
   for (let i = 0; i < player.gameboard.ships.length; i++) {}
 }
 
+
 createBoardGrid(yourBoard);
 createBoardGrid(aiBoard);
 //addEventListeners();
 renderOwnBoard();
 placeShips();
+
 
 /*todo
   //add functionality to place ships at the start
